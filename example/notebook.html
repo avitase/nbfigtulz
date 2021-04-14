@@ -14261,8 +14261,8 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="nbfigtulz"><code>nbfigtulz</code><a class="anchor-link" href="#nbfigtulz">&#182;</a></h1><p><code>nbfigtulz</code> is a small library to show and save visualizations made via <a href="https://matplotlib.org/">matplotlib</a> with the aim to let the user conveniently render publication ready images by default while working in <a href="https://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a>. The main features of <code>nbfigtulz</code> are:</p>
 <ul>
-<li>Images are generate and stored in the <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a> and <a href="https://en.wikipedia.org/wiki/Progressive_Graphics_File">PGF</a> format which lends itself perfectly for inclusion in <a href="https://de.wikipedia.org/wiki/PDF/A">PDF/A-1b</a> documents.</li>
-<li><a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNGs</a> are saved <a href="https://en.wikipedia.org/wiki/Base64">Base64</a> encoded within a notebook. This makes the notebook free-standing and one can send raw notebooks to colleagues without having to remember to include various additional files such as images. Note that no JavaScript is required and <strong>one does not have to re-run the notebook to display the images</strong>.</li>
+<li>Images are generated and stored in the <a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a> and <a href="https://en.wikipedia.org/wiki/Progressive_Graphics_File">PGF</a> format which lends itself perfectly for inclusion in <a href="https://de.wikipedia.org/wiki/PDF/A">PDF/A-1b</a> documents.</li>
+<li><a href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">PNGs</a> are saved <a href="https://en.wikipedia.org/wiki/Base64">Base64</a> encoded within a notebook. This makes the notebook free-standing and one can send raw notebooks to colleagues without having to remember to include various additional files such as images. Note that <strong>one does not have to re-run the notebook to display the images</strong>.</li>
 <li>Users are encouraged to render small images with high-resolution. Ideally, these images can be included without rescaling into a document.</li>
 </ul>
 
@@ -14400,7 +14400,7 @@ a.anchor-link {
 <li><code>filename_base</code> is the desired file name of the PNG and PGF file without the file type extensions, i.e, passing <code>foobar</code> as the <code>filename_base</code> will store the image as <code>foobar.png</code> and <code>foobar.pgf</code>.</li>
 <li><code>resize</code> can be used to resize the image. If not <code>None</code> this can either be a tuple of two numbers (the width and height) or an instance of <code>ftl.fig_size</code>, e.g., <code>ftl.fig_size.SMALL</code> or <code>ftl.fig_size.LARGE</code>.</li>
 <li><code>suppress_pgf</code> suppressed the generation of a PGF file which can speed up the rendering process.</li>
-<li><code>quiet</code>: By default the FQNs of the generate files are printed. Set <code>quiet</code> to <code>True</code> to suppress this.</li>
+<li><code>quiet</code>: By default the FQNs of the generated files are printed. Set <code>quiet</code> to <code>True</code> to suppress this.</li>
 <li><code>**kwargs</code>: These arguments are passed through to <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html"><code>matplotlib.pyplot.savefig</code></a> which we use internally to store the images.</li>
 </ul>
 
