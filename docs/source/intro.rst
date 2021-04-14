@@ -5,7 +5,7 @@ Introduction
 
 .. code-block:: python
   :linenos:
-  :emphasize-lines: 5, 10
+  :emphasize-lines: 1, 5, 10
 
   import nbfigtulz as ftl
   import numpy as np
@@ -23,7 +23,7 @@ Introduction
 By annotating with :class:`nbfigtulz.figtools.with_context` ``make_fig`` is wrapped with a context managers that temporally overwrites, e.g., ``matplotlib.rcParams``.
 This configuration is then used by :class:`nbfigtulz.figtools.save_fig` to save ``fig`` in the PNG and PGF format.
 (Note that our annotation also temporally sets the backend to ``"pgf"``, i.e., calling ``make_fig`` without the annotation might only generate a PNG file.)
-The return value of :class:`nbfigtulz.figtools.save_fig` is a thumbnail that is drawn to your notebook if its ``__repr__`` overload is called.
+The return value of :class:`nbfigtulz.figtools.save_fig` is a :class:`nbfigtulz.thumbnail.Thumbnail` instance that is drawn to your notebook if its ``__repr__`` overload is called.
 This thumbnail is clickable & downloadable, is inlined into the notebook and thus will be displayed without needing to re-run the notebook!
 
 The implicitly used defaults such as the image size and resolution, or the root directory where the generated images are stored, can be changed globally in :class:`nbfigtulz.config.config`:

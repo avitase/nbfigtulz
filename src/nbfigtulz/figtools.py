@@ -8,13 +8,13 @@ import matplotlib as mpl
 from IPython.display import HTML
 
 from . import config as cfg
-from . import image
+from . import thumbnail
 
 
 class Size(enum.Enum):
     """Common image sizes.
 
-    This is nothing but a convenient wrapper for the images sizes stored inside of :class:`nbfigtulz.config.config`.
+    This is nothing but a convenient wrapper for the image sizes stored inside of :class:`nbfigtulz.config.config`.
     Possible values are :class:`Size.SMALL` and :class:`Size.LARGE`.
     """
 
@@ -99,8 +99,9 @@ def save_fig(
     resize: Any = Size.SMALL,
     suppress_pgf: bool = False,
     quiet: bool = False,
+    thumbnail_scale: Optional[float] = None,
     **kwargs,
-) -> image.PNGImage:
+) -> thumbnail.Thumbnail:
     """The provided figure is stored to disk in the PNG and PGF (optional) format.
 
     :param fig: A ``matplotlib.pyplot.figure`` instance.
@@ -108,6 +109,7 @@ def save_fig(
     :param resize: If not ``None`` this will resize the figure. Pass anything with a ``get_size() -> Tuple[float, float]`` member function (e.g., :class:`Size`) or a tuple of two floats. Those floats are interpreted as the new width and height in units of inches, respectively.
     :param suppress_pgf: Suppress the generation of the PGF file.
     :param quiet: Do not print the FQNs of the generated files.
+    :param thumbnail_scale: If not ``None`` this overwrites the default thumbnail scaling in :class:`nbfigtulz.config.config`.
     :param kwargs: Arguments passed to ``matplotlib.pyplot.savefig``.
     :return: The rendered PNG image.
     """
@@ -139,11 +141,24 @@ def save_fig(
     img_bytes.seek(0)
 
     width, _ = fig.get_size_inches() * 100
-    return image.PNGImage(img_bytes.read(), filename_base, width=width)
+
+    if not thumbnail_scale:
+        thumbnail_scale = cfg["thumbnail_scale"]
+
+    return thumbnail.Thumbnail(
+        img_bytes.read(),
+        filename_base,
+        width=width,
+        thumbnail_scale=thumbnail_scale,
+        thumbnail_quality=cfg["thumbnail_quality"],
+    )
 
 
 def img_grid(
-    images: Tuple[image.PNGImage], *, n_columns: int, width: Optional[int] = None
+    images: Tuple[thumbnail.Thumbnail, ...],
+    *,
+    n_columns: int,
+    width: Optional[int] = None,
 ) -> HTML:
     """Arranges images in a grid.
 

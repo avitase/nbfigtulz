@@ -25,10 +25,10 @@ nbfigtulz.figtools module
    :undoc-members:
    :show-inheritance:
 
-nbfigtulz.image module
-----------------------
+nbfigtulz.thumbnail module
+--------------------------
 
-.. automodule:: nbfigtulz.image
+.. automodule:: nbfigtulz.thumbnail
    :members:
    :undoc-members:
    :show-inheritance:
