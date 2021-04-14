@@ -20,7 +20,7 @@ Introduction
 
   make_fig(np.linspace(0, 50, 500), file_name='test')
 
-By annotating with :class:`nbfigtulz.figtools.with_context` ``make_fig`` is wrapped with a context managers that temporally overwrites, e.g., ``matplotlib.rcParams``.
+By annotating with :class:`nbfigtulz.figtools.with_context` ``make_fig`` is wrapped with a context manager that temporally overwrites, e.g., ``matplotlib.rcParams``.
 This configuration is then used by :class:`nbfigtulz.figtools.save_fig` to save ``fig`` in the PNG and PGF format.
 (Note that our annotation also temporally sets the backend to ``"pgf"``, i.e., calling ``make_fig`` without the annotation might only generate a PNG file.)
 The return value of :class:`nbfigtulz.figtools.save_fig` is a :class:`nbfigtulz.thumbnail.Thumbnail` instance that is drawn to your notebook if its ``__repr__`` overload is called.
