@@ -1,6 +1,7 @@
 # nbfigtulz
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Documentation Status](https://readthedocs.org/projects/nbfigtulz/badge/?version=latest)](http://nbfigtulz.readthedocs.io/?badge=latest)
 
 `nbfigtulz` is a small library to show and save visualizations made via [matplotlib](https://matplotlib.org/) with the aim to let the user conveniently render publication ready images by default while working in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/). The main features of `nbfigtulz` are:
 - Images are generated and stored in the [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) and [PGF](https://en.wikipedia.org/wiki/Progressive_Graphics_File) format which lends itself perfectly for inclusion in [PDF/A-1b](https://de.wikipedia.org/wiki/PDF/A) documents.
