@@ -2,6 +2,7 @@ import enum
 import functools
 import io
 import pathlib
+from typing import Any, Callable, Dict, Optional, Tuple
 
 import matplotlib as mpl
 from IPython.display import HTML
@@ -11,10 +12,25 @@ from . import image
 
 
 class Size(enum.Enum):
-    SMALL = 1
-    LARGE = 2
+    """Common image sizes.
 
-    def get_size(self):
+    This is nothing but a convenient wrapper for the images sizes stored inside of :class:`nbfigtulz.config.config`.
+    Possible values are :class:`Size.SMALL` and :class:`Size.LARGE`.
+    """
+
+    SMALL = 1
+    """Refers to ``size_small`` in :class:`nbfigtulz.config.config`.
+    """
+
+    LARGE = 2
+    """Refers to ``size_large`` in :class:`nbfigtulz.config.config`.
+    """
+
+    def get_size(self) -> Tuple[float, float]:
+        """Returns the image size as a tuple of width and height.
+
+        :return: The width and height as a tuple of floats in units of inches.
+        """
         if self == Size.SMALL:
             return cfg["size_small"]
         if self == Size.LARGE:
@@ -24,7 +40,15 @@ class Size(enum.Enum):
 
 
 class FigContext:
-    def __init__(self, backend="", rcParams=None):
+    """Context manager that temporally overwrites ``matplotlib.rcParams`` and the backend.
+
+    :param backend: The new backend, defaults to ``"pgf"``.
+    :param rcParams: The temporal ``rcParams``, defaults to ``lualatex`` for ``pgf.texsystem``.
+    """
+
+    def __init__(
+        self, backend: str = "", rcParams: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.backend = backend if backend else "pgf"
         self.old_backend = mpl.get_backend()
 
@@ -46,13 +70,21 @@ class FigContext:
         for k in self.rcParams:
             mpl.rcParams[k] = self.rcParams[k]
 
-    def __exit__(self, *args):
+    def __exit__(self, exc, *args, **kwargs) -> bool:
         mpl.use(self.old_backend)
         for k in self.rcParams:
             mpl.rcParams[k] = self.old_rcParams[k]
 
+        return exc is None
 
-def with_context(func):
+
+def with_context(func: Callable) -> Callable:
+    """Wraps a function call inside the :class:`FigContext` context.
+
+    :param func: A function.
+    :return: The wrapped function.
+    """
+
     @functools.wraps(func)
     def wrapped(*args, **kwargs):
         with FigContext():
@@ -62,8 +94,23 @@ def with_context(func):
 
 
 def save_fig(
-    fig, filename_base, resize=Size.SMALL, suppress_pgf=False, quiet=False, **kwargs
-):
+    fig: Any,
+    filename_base: str,
+    resize: Any = Size.SMALL,
+    suppress_pgf: bool = False,
+    quiet: bool = False,
+    **kwargs,
+) -> image.PNGImage:
+    """The provided figure is stored to disk in the PNG and PGF (optional) format.
+
+    :param fig: A ``matplotlib.pyplot.figure`` instance.
+    :param filename_base: Base name (w/o file type suffix) of the PNG and PGF file.
+    :param resize: If not ``None`` this will resize the figure. Pass anything with a ``get_size() -> Tuple[float, float]`` member function (e.g., :class:`Size`) or a tuple of two floats. Those floats are interpreted as the new width and height in units of inches, respectively.
+    :param suppress_pgf: Suppress the generation of the PGF file.
+    :param quiet: Do not print the FQNs of the generated files.
+    :param kwargs: Arguments passed to ``matplotlib.pyplot.savefig``.
+    :return: The rendered PNG image.
+    """
     if "dpi" not in kwargs:
         kwargs["dpi"] = cfg["dpi"]
 
@@ -95,7 +142,16 @@ def save_fig(
     return image.PNGImage(img_bytes.read(), filename_base, width=width)
 
 
-def img_grid(images, *, n_columns, width=None):
+def img_grid(
+    images: Tuple[image.PNGImage], *, n_columns: int, width: Optional[int] = None
+) -> HTML:
+    """Arranges images in a grid.
+
+    :param images: List of images.
+    :param n_columns: Number of columns.
+    :param width: If not ``None`` the width of the grid in units of pixels.
+    :return: The image grid.
+    """
     cells = [img.to_html() if img else "" for img in images]
 
     n_rows = len(cells) // n_columns
