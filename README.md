@@ -12,6 +12,14 @@
 ## Documentation
 Find our documentation [here](https://nbfigtulz.readthedocs.io).
 
+## Installation
+`nbfigtulz` releases are available as wheel packages for macOS, Windows and Linux on [PyPI](https://pypi.org/project/nbfigtulz/).
+Install it using pip:
+```
+python -m pip install -U pip
+python -m pip install -U nbfigtulz
+```
+
 ## Examples
 In addition to our [documentation](https://nbfigtulz.readthedocs.io) we provide a short notebook with a few examples:
 - [example/notebook.ipynb](https://github.com/avitase/nbfigtulz/blob/main/example/notebook.ipynb)

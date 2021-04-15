@@ -46,3 +46,8 @@ In the following example we generate 3 plots and arrange them in a 2x2 grid (the
   ftl.grid([make_fig(x * i, f'test{i}') for i in range(1, 4)], n_columns=2)
 
 Technically, :class:`nbfigtulz.figtools.img_grid` generates a table in HTML where each image stays separately clickable and downloadable.
+
+Installation
+^^^^^^^^^^^^
+Releases are available as wheel packages for macOS, Windows and Linux on PyPI: `https://pypi.org/project/nbfigtulz/ <https://pypi.org/project/nbfigtulz/>`_.
+If you prefer to build from source visit our GitHub repository: `https://github.com/avitase/nbfigtulz <https://github.com/avitase/nbfigtulz>`_.
