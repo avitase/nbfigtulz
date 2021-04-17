@@ -11,11 +11,11 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-from pathlib import Path
+import re
 import sys
+from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "../../src/"))
-
 
 # -- Project information -----------------------------------------------------
 
@@ -24,8 +24,13 @@ copyright = "2021, Nis Meinert"
 author = "Nis Meinert"
 
 # The full version, including alpha/beta/rc tags
-release = "0.6"
-
+with open(Path(__file__).parent / "../../setup.cfg", "r") as f:
+    for line in f.readlines():
+        line = line.strip()
+        m = re.search("^version\s*=\s*(.+)$", line)
+        if m:
+            release = m.group(1)
+            print(f"Found release: '{release}'")
 
 # -- General configuration ---------------------------------------------------
 
@@ -45,7 +50,6 @@ templates_path = [
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
 
 # -- Options for HTML output -------------------------------------------------
 
