@@ -79,16 +79,31 @@ class FigContext:
 
 
 def with_context(
-    func: Optional[Callable] = None, rcParams: Optional[Dict[str, Any]] = None
+    func: Optional[Callable] = None,
+    rcParams: Optional[Dict[str, Any]] = None,
+    preamble: Optional[Tuple[str, ...]] = None,
 ) -> Callable:
     """Wraps a function call inside the :class:`FigContext` context.
 
     :param func: A function.
-    :rcParams: Temporal ``rcParams`` for :class:`FigContext`.
+    :param rcParams: Temporal ``rcParams`` for :class:`FigContext`.
+    :param preamble: List of commands for ``rcParams['pgf.preamble']``.
     :return: The wrapped function.
     """
+    if not rcParams:
+        rcParams = dict()
+
+    if preamble:
+        key = "pgf.preamble"
+        if key not in rcParams:
+            rcParams[key] = ""
+        else:
+            rcParams[key] += "\n"
+
+        rcParams["pgf.preamble"] += "\n".join(p for p in preamble)
 
     if callable(func):
+
         @functools.wraps(func)
         def wrapped(*args, **kwargs):
             with FigContext(rcParams=rcParams):
