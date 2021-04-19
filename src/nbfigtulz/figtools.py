@@ -178,16 +178,19 @@ def save_fig(
 def img_grid(
     images: Tuple[thumbnail.Thumbnail, ...],
     *,
-    n_columns: int,
+    n_columns: Optional[int] = None,
     width: Optional[int] = None,
 ) -> HTML:
     """Arranges images in a grid.
 
     :param images: List of images.
-    :param n_columns: Number of columns.
+    :param n_columns: Number of columns, defaults to number of images.
     :param width: If not ``None`` the width of the grid in units of pixels.
     :return: The image grid.
     """
+    if n_columns is None:
+        n_columns = len(images)
+
     cells = [img.to_html() if img else "" for img in images]
 
     n_rows = len(cells) // n_columns
