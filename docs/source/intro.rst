@@ -49,5 +49,9 @@ Technically, :class:`nbfigtulz.figtools.img_grid` generates a table in HTML wher
 
 Installation
 ^^^^^^^^^^^^
-Releases are available as wheel packages for macOS, Windows and Linux on PyPI: `https://pypi.org/project/nbfigtulz/ <https://pypi.org/project/nbfigtulz/>`_.
-If you prefer to build from source visit our GitHub repository: `https://github.com/avitase/nbfigtulz <https://github.com/avitase/nbfigtulz>`_.
+Releases are available as wheel packages for macOS, Windows and Linux on PyPI: `pypi.org/project/nbfigtulz/ <https://pypi.org/project/nbfigtulz/>`_.
+If you prefer to build from source visit our GitHub repository: `github.com/avitase/nbfigtulz <https://github.com/avitase/nbfigtulz>`_.
+
+Examples
+^^^^^^^^
+We provide a short notebook with a few examples on our `GitHub page <https://github.com/avitase/nbfigtulz>`_: `example/notebook.ipynb <https://github.com/avitase/nbfigtulz/blob/main/example/notebook.ipynb>`_.
