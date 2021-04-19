@@ -78,19 +78,25 @@ class FigContext:
         return exc is None
 
 
-def with_context(func: Callable) -> Callable:
+def with_context(
+    func: Optional[Callable] = None, rcParams: Optional[Dict[str, Any]] = None
+) -> Callable:
     """Wraps a function call inside the :class:`FigContext` context.
 
     :param func: A function.
+    :rcParams: Temporal ``rcParams`` for :class:`FigContext`.
     :return: The wrapped function.
     """
 
-    @functools.wraps(func)
-    def wrapped(*args, **kwargs):
-        with FigContext():
-            return func(*args, **kwargs)
+    if callable(func):
+        @functools.wraps(func)
+        def wrapped(*args, **kwargs):
+            with FigContext(rcParams=rcParams):
+                return func(*args, **kwargs)
 
-    return wrapped
+        return wrapped
+
+    return functools.partial(with_context, rcParams=rcParams)
 
 
 def save_fig(
