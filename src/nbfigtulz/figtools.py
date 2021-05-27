@@ -121,6 +121,7 @@ def save_fig(
     suppress_pgf: bool = False,
     quiet: bool = False,
     thumbnail_scale: Optional[float] = None,
+    tight_layout: bool = True,
     **kwargs,
 ) -> thumbnail.Thumbnail:
     """The provided figure is stored to disk in the PNG and PGF (optional) format.
@@ -131,6 +132,7 @@ def save_fig(
     :param suppress_pgf: Suppress the generation of the PGF file.
     :param quiet: Do not print the FQNs of the generated files.
     :param thumbnail_scale: If not ``None`` this overwrites the default thumbnail scaling in :class:`nbfigtulz.config.config`.
+    :param tight_layout: Require tight layout.
     :param kwargs: Arguments passed to ``matplotlib.pyplot.savefig``.
     :return: The rendered PNG image.
     """
@@ -148,7 +150,8 @@ def save_fig(
         if not suppress_pgf:
             ftypes.append("pgf")
 
-        fig.tight_layout()
+        if tight_layout:
+            fig.tight_layout()
 
     for ftype in ftypes:
         filename = str(pathlib.Path(cfg["img_dir"]) / f"{filename_base}.{ftype}")
