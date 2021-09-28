@@ -1,6 +1,6 @@
 import base64
 import io
-from typing import Any, Optional
+from typing import Any, Optional, Tuple
 
 from IPython.display import display, HTML
 from PIL import Image
@@ -13,6 +13,7 @@ class Thumbnail:
     :param file_name: The file name.
     :param thumbnail_scale: Scaling factor for thumbnail.
     :param thumbnail_quality: Image quality of the thumbnail.
+    :param bkg_color: Background color as RGB tuple.
     :param width: If not ``None`` the image is rescaled to the given width in units of pixels.
     :param print_compression: Print the compression rate of the thumbnail w.r.t. the PNG.
     """
@@ -23,6 +24,7 @@ class Thumbnail:
         file_name: str,
         thumbnail_scale: float,
         thumbnail_quality: int,
+        bkg_color: Tuple[int, int, int],
         width: Optional[int] = None,
         print_compression: bool = False,
     ):
@@ -30,7 +32,8 @@ class Thumbnail:
         self.file_name = file_name
         self.width = width
 
-        png = Image.open(io.BytesIO(bytes))
+        png = Image.open(io.BytesIO(bytes)).convert("RGBA")
+
         w, h = png.size
         size = int(w * thumbnail_scale), int(h * thumbnail_scale)
 
@@ -41,7 +44,8 @@ class Thumbnail:
             quality = 95
 
         buffer = io.BytesIO()
-        png.resize(size).convert("RGB").save(
+        bkg = Image.new("RGBA", size, bkg_color)
+        Image.alpha_composite(bkg, png.resize(size)).convert("RGB").save(
             buffer, format="JPEG", optimize=True, quality=quality
         )
         self.thumbnail = Thumbnail._bytes_to_decoded_b64(buffer.getvalue())
