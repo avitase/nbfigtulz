@@ -5,7 +5,7 @@ import pathlib
 from typing import Any, Callable, Dict, Optional, Tuple
 
 import matplotlib as mpl
-from IPython.display import HTML
+from IPython.display import display, HTML
 
 from . import config as cfg
 from . import thumbnail
@@ -161,7 +161,7 @@ def save_fig(
         fig.savefig(filename, **kwargs)
 
         if not quiet:
-            print(filename)
+            display(HTML(f'<a href="{filename}">{filename}</a>'))
 
     img_bytes = io.BytesIO()
     fig.savefig(img_bytes, format="png", **kwargs)
