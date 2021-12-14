@@ -10,7 +10,7 @@ class Thumbnail:
     """Wrapper for a PNG image.
 
     :param bytes: Bytes of the PNG image.
-    :param file_name: The file name.
+    :param filename: The file name.
     :param thumbnail_scale: Scaling factor for thumbnail.
     :param thumbnail_quality: Image quality of the thumbnail.
     :param bkg_color: Background color as RGB tuple.
@@ -21,7 +21,7 @@ class Thumbnail:
     def __init__(
         self,
         bytes: Any,
-        file_name: str,
+        filename: str,
         thumbnail_scale: float,
         thumbnail_quality: int,
         bkg_color: Tuple[int, int, int],
@@ -29,7 +29,7 @@ class Thumbnail:
         print_compression: bool = False,
     ):
         self.b64encoded = Thumbnail._bytes_to_decoded_b64(bytes)
-        self.file_name = file_name
+        self.filename = filename
         self.width = width
 
         png = Image.open(io.BytesIO(bytes)).convert("RGBA")
@@ -73,7 +73,7 @@ class Thumbnail:
             return img
 
         link_temp = (
-            f'<a download="{self.file_name}.png" '
+            f'<a download="{self.filename}.png" '
             + f'href="data:image/png;base64, {self.b64encoded}">'
             + "{body}</a>"
         )
@@ -81,4 +81,4 @@ class Thumbnail:
 
     def __repr__(self):
         display(HTML(self.to_html(link=True)))
-        return self.file_name + ".png"
+        return self.filename + ".png"
