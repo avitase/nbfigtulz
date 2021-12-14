@@ -61,7 +61,7 @@ class Thumbnail:
     def to_html(self, link: bool = True) -> str:
         """Renders the image into an HTML image tag.
 
-        :param link: Whether or not to make the image tag a downloadable file link.
+        :param link: Whether to make the image tag a downloadable file link.
         :return: An HTML image tag.
         """
         img = "<img "
