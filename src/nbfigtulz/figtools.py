@@ -119,7 +119,7 @@ def save_fig(
     filename_base: str,
     resize: Any = Size.SMALL,
     *,
-    suppress_pgf: bool = False,
+    suppress_pgf: Optional[bool] = None,
     quiet: bool = False,
     thumbnail_scale: Optional[float] = None,
     tight_layout: bool = True,
@@ -139,6 +139,9 @@ def save_fig(
     :param kwargs: Arguments passed to ``matplotlib.pyplot.savefig``.
     :return: The rendered PNG image.
     """
+    if suppress_pgf is None:
+        suppress_pgf = cfg["suppress_pgf"]
+
     if "dpi" not in kwargs:
         kwargs["dpi"] = cfg["dpi"]
 

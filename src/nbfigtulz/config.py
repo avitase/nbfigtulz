@@ -7,6 +7,7 @@ config: Dict[str, Any] = {
     "dpi": 300,
     "thumbnail_scale": 0.5,
     "thumbnail_quality": 42,
+    "suppress_pgf": True,
 }
 """Configuration used in :class:`nbfigtulz.figtools.save_fig`.
 
@@ -16,4 +17,5 @@ config: Dict[str, Any] = {
 - ``dpi``: DPI used to store images.
 - ``thumbnail_scale``: The thumbnail can be scaled w.r.t. the generated PNG to save space. Setting the scale to, e.g., 0.5 shrinks the PNG by a factor of 2.
 - ``thumbnail_quality``: The image quality of the thumbnail, on a scale from 1 (worst) to 95 (best). 
+- ``suppress_pgf``: Suppress PGF rendering by default.
 """
